@@ -17,3 +17,20 @@ mail:
  image: tianon/exim4
  expose:
     - "25"
+
+web:
+  restart: always
+  build: ./web
+  expose:
+    - "8000"
+  links:
+    - postgres:postgres
+    - redis:redis
+    - mail:mail
+  volumes:
+    - /usr/src/app/static
+  env_file: .env
+  command: python manage.py runserver 0.0.0.0:8000
+  # command: /usr/local/bin/gunicorn docker_django.wsgi:application -w 2 -b :8000
+  ports:
+    - "8000:8000"
