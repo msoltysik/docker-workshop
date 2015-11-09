@@ -30,7 +30,19 @@ web:
   volumes:
     - /usr/src/app/static
   env_file: .env
-  command: python manage.py runserver 0.0.0.0:8000
-  # command: /usr/local/bin/gunicorn docker_django.wsgi:application -w 2 -b :8000
+  # command: python manage.py runserver 0.0.0.0:8000
+  command: /usr/local/bin/gunicorn docker_django.wsgi:application -w 2 -b :8000
   ports:
     - "8000:8000"
+
+nginx:
+  restart: always
+  build: ./nginx/
+  ports:
+    - "80:80"
+  volumes:
+    - /www/static
+  volumes_from:
+    - web
+  links:
+    - web:web
