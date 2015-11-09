@@ -11,3 +11,9 @@ postgres:
     - /var/lib/postgresql
   ports:
     - "5432:5432"
+
+mail:
+ restart: always
+ image: tianon/exim4
+ expose:
+    - "25"
