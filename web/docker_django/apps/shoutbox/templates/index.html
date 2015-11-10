@@ -1,0 +1,41 @@
+{% extends "_base.html" %}
+
+
+{% block content %}
+
+<div class="text-center">
+  {% load staticfiles %}
+  <br>
+  <img src="http://1.bp.blogspot.com/-raL7yilCPD0/TvQQ0JX5GKI/AAAAAAAABH4/UJea5ziWmMs/s200/SHOUTBOX_BLOG.jpg">
+  <br>
+  <p>This page has been viewed <strong>{{counter}}</strong> times!</p>
+</div>
+
+<br>
+
+<form action="/" method="POST">
+  {% csrf_token %}
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-6">
+        <input name="item_text" class="form-control input-lg" type="text" placeholder="Enter a shout" required>
+      </div>
+      <div class="col-md-6">
+        <input name="email_address" class="form-control input-lg" type="email" placeholder="Enter a mail" required>
+      </div>
+    </div>
+  </div>
+  <input type="submit" class="btn btn-success btn-lg btn-block" value="Submit">
+</form>
+
+<br>
+<hr>
+
+<div>
+  {% for item in items %}
+    <h4 class="well">
+      <strong>{{item.email_address}}</strong> on {{item.date_posted | date:"c"}} : <em>{{item.text}}</em></h4>
+  {% endfor %}
+</div>
+
+{% endblock content %}
